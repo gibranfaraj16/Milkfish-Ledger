@@ -264,7 +264,7 @@ def init_db():
         c.executescript(SKEMA)
         if c.execute("SELECT COUNT(*) FROM users").fetchone()[0] == 0:
             for nama, email, role, pin in USERS_AWAL:
-                c.execute("INSERT INTO users (nama,email,role,pin_hash) VALUES (?,?,?,?)",
+                c.execute("INSERT OR IGNORE INTO users (nama,email,role,pin_hash) VALUES (?,?,?,?)",
                           (nama, email, role, hash_pin(pin)))
         if c.execute("SELECT COUNT(*) FROM accounts").fetchone()[0] == 0:
             c.executemany("INSERT INTO accounts (kode,nama,kelompok,saldo_normal) VALUES (?,?,?,?)", AKUN_AWAL)
